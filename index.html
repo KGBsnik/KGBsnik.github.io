@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dictionary</title>
+</head>
+<body>
+<h1>Dictionary</h1>
+<p id="aboutGuessedWords"></p>
+<style>
+body {
+	background-color:#87da90cc;
+}
+p {
+	font-size: 20px;
+	font-style: serif;
+}
+</style>
+
+
+<script>
+// Create a list of objects
+//{word:"", description: ""},
+var wordsWithDescriptions = [
+{word:"whale", description: "a very large sea mammal that breathes air through a hole at the top of its headThe communicative ability of the ... is thought to be highly developed."},
+{word:"vinegar", description: "a sharp-tasting liquid, made especially from sour wine, malt, or cider, that is used to add flavour to or to preserve food: wine ... "},
+{word:"exclaim", description: "to say or shout something suddenly because of surprise, fear, pleasure, etc.: You can leave now! - she ...ed."},
+{word:"", description: ""},
+{word:"leak", description: "(of a liquid or gas) to escape from a hole or crack in a pipe or container; (of a container) to allow liquid or gas to escape: The car ...ed oil all over the drive."},
+{word:"dedicated", description: "believing that something is very important and giving a lot of time and energy to it: She's completely ... to her work."},
+{word:"swirl", description: "to move quickly with a twisting, circular movement, or to make something do this: The fog ...ed thickly around us."},
+{word:"succumb", description: "to lose the determination to oppose something; to accept defeat: I felt sure it would only be a matter of time before he ...ed to my charms."},
+{word:"ecstasy", description: "a state of extreme happiness, especially when feeling pleasure: She threw her head back as if in ... ."},
+{word:"paralysis", description: "a condition in which you are unable to move all or part of your body because of illness or injury: Some nervous disorders can produce ... ."},
+{word:"cheesy", description: "of bad quality or in bad taste: ... hotel music"},
+{word:"spill", description: "to (cause to) flow, move, fall, or spread over the edge or outside the limits of something: I ...ed coffee on my silk shirt."},
+{word:"obtain", description: "to get something, especially by asking for it, buying it, working for it, or producing it from something else: First editions of these books are now almost impossible to ... ."},
+{word:"precaution", description: "an action that is done to prevent something unpleasant or dangerous happening: They failed to take the necessary ...s to avoid infection."},
+{word:"mugging", description: "an act of attacking someone and stealing their money: Police are concerned that ... is on the increase."},
+{word:"subdued", description: "If a colour or light is ..., it is not very bright: ... lighting"},
+{word:"envelope", description: "a flat, usually square or rectangular, paper container for a letter: I folded the letter in half and put it in an ... ."},
+{word:"span", description: "the period of time that sometimes exists or happens: an average life ... of 70 years"},
+{word:"reminiscent", description: "making you remember a particular person, event, or thing: That song is so ... of my adolescence."},
+{word:"envelop", description: "to cover or surround something completely: The graveyard looked ghostly, ...ed in mist."},
+{word:"backing", description: "support, especially money, that someone gives to a person or plan: If I go ahead with the plan, can I count on your ... ?"},
+{word:"patronize", description: "to speak to or behave towards someone as if they are stupid or not important: Stop ...ing me - I understand the play as well as you do."},
+{word:"avenge", description: "to do harm to or punish the person responsible for something bad done to you or your family or friends in order to achieve a fair situation: At the end of the film, the murderer is killed by his victim's ...ing girlfriend."},
+{word:"verge", description: "the edge or border of something: They set up camp on the ... of the desert."},
+{word:"solid", description: "hard or firm, keeping a clear shape: ... ground"},
+{word:"hassle", description: "(a situation causing) difficulty or trouble: It's one of the few bars that women can go to and not get any ... from men."},
+{word:"cockroach", description: "a flat, brown or black insect sometimes found in the home"},
+{word:"vital", description: "necessary for the success or continued existence of something; extremely important: A strong opposition is ... to a healthy democracy."},
+{word:"bargain", description: "something on sale at a lower price than its true value: his coat was half-price - a real ... ."},
+{word:"scale", description: "a device for weighing things or people: kitchen/bathroom ...s"},
+{word:"leftover", description: "A ... part of something is the part that has not been used or eaten when the other parts have been: some ... chicken from last night's meal"},
+{word:"distinguished", description: "used to describe a respected and admired person, or their work: a ... writer/director/politician"},
+{word:"liver", description: "a large organ in the body that cleans the blood and produces bile, or this organ from an animal used as meat: He died of ... failure."},
+{word:"bland", description: "not having a strong taste or character or not showing any interest or energy: Pop music these days is so ... ."},
+{word:"jubilee", description: "(the celebration of) the day on which an important event happened many years ago: the Queen's diamond ... "},
+{word:"constipated", description: "unable to empty your bowels as often as you should: If you ate more fibre you wouldn't get ... ."},
+{word:"needy", description: "wanting too much attention and love: Sybil was very insecure and ... ."},
+{word:"poverty", description: " the condition of being extremely poor: wo million people in the city live in abject (= very great) ... ."},
+{word:"obliterate", description: "to remove all signs of something, either by destroying it or by covering it so that it cannot be seen: The missile strike was devastating - the target was totally ... ."},
+{word:"hag", description: "an ugly old ... "},
+{word:"cripple", description: "(offensive old-fashioned) a person who cannot use their arms or legs in a normal way"},
+{word:"drawback", description: "a disadvantage or the negative part of a situation: One of the ...s of living with someone is having to share a bathroom."},
+{word:"prevalence", description: "the fact of something existing or happening often : They noted the ... of this attitude among leading financial experts."},
+{word:"elaborate", description: "containing a lot of careful detail or many detailed parts: They're making the most ... preparations for the wedding."},
+{word:"mansion", description: "a very large, expensive house: The street is lined with enormous ...s where the rich and famous live."},
+{word:"forehead", description: "the flat part of the face, above the eyes and below the hair: She's got a high ... ."},
+{word:"scenery", description: " the general appearance of the natural environment, especially when it is beautiful: They stopped at the top of the hill to admire the ... ."},
+{word:"embark", description: "to go onto a ship: We ...ed at Liverpool for New York."},
+{word:"cohesion", description: "the situation when the members of a group or society are united: social/national ..."},
+{word:"throw", description: "to send something through the air with force, especially by a sudden movement of the arm: My friend ... the ball back over the fence."},
+{word:"squat", description: "to position yourself close to the ground balancing on the front part of your feet with your legs bent under your body: She ...ted on the ground and warmed her hands by the fire."},
+{word:"apprentice", description: "someone who has agreed to work for a skilled person for a particular period of time and often for low payment, in order to learn that person's skills: Most of the work was done by ...s."},
+{word:"acclaim", description: "public approval and praise: Despite the critical ... , the novel did not sell well."},
+{word:"clerical", description: "relating to work done in an office: a ... job (= a job performing general office duties)."},
+{word:"filthy", description: "extremely or unpleasantly dirty: Wash your hands - they're ... !"},
+{word:"lousy", description: "very bad: ... food/service"},
+{word:"explicit", description: "clear and exact: I gave her very ... directions how to get here."},
+{word:"erratic", description: "moving or behaving in a way that is not regular, certain, or expected: He drove in an ... course down the road."},
+{word:"cosy", description: "comfortable and pleasant, especially (of a building) because of being small and warm: This room is nice and ... in the winter."},
+{word:"tranquil", description: "calm and peaceful and without noise, violence, worry, etc.: She stared at the ... surface of the water."},
+{word:"compel", description: "to force someone to do something: As a schoolboy he was ...led to wear shorts even in winter."},
+{word:"prudence", description: "the state of being careful in the way you make decisions or spend money so that you avoid unnecessary risks: The challenge we are trying to meet is balancing financial ... with the need for success."},
+{word:"hazard", description: "something that is dangerous and likely to cause damage: The busy traffic entrance was a ... to pedestrians."},
+{word:"nail", description: "a small, thin piece of metal with one pointed end and one flat end that you hit into something with a hammer, especially in order to fasten or join it to something else: Hammer a ... into the wall and we'll hang the mirror from it."},
+{word:"inner", description: "inside or contained within something else: Leading off the main hall is a series of small ... rooms."},
+{word:"malicious", description: " intended to harm or upset other people: a ... look in his eyes"},
+{word:"mitigate", description: "to make something less harmful, unpleasant, or bad: It is unclear how to ... the effects of tourism on the island."},
+{word:"righteous", description: "morally correct: He was regarded as a ... and holy man."},
+{word:"affirmative", description: "relating to a statement that shows agreement or says yes: an ... answer/response"},
+{word:"", description: "an amount of money that is given back to you, especially because you are not happy with a product or service that you have bought: I took the radio back to the shop and asked for/demanded/got/was given a ... ."},
+{word:"harm", description: "physical or other injury or damage: Missing a meal once in a while never did anyone any ... ."},
+{word:"restore", description: "to return something or someone to an earlier good condition or position: The former leader was today ...d to power in the first free elections for 20 years."},
+{word:"intently", description: "in a way that gives all your attention to something: The child stared ... at her."},
+{word:"suspend", description: "to stop something from being active, either temporarily or permanently: The country's president has ...ed the constitution and assumed total power."},
+{word:"indictment", description: "a sign that a policy, system, society, etc. is bad or wrong: This seems to me to be a damning ... of the government's education policy."},
+{word:"disposal", description: "the act of getting rid of something, especially by throwing it away: I wrapped the broken glass carefully in thick newspaper and took it outside for safe  ... ."},
+{word:"seduce", description: "to make someone feel attracted to you and want to have sex with you, often someone younger or less experienced: He felt that she was trying to ... him."},
+{word:"aware", description: "knowing that something exists, or having knowledge or experience of a particular thing: I wasn't even ... that he was ill."},
+{word:"accuracy", description: "the fact of being exact or correct: We can predict changes with a surprising degree of ... ."},
+{word:"grape", description: "a small, round, purple or pale green fruit that you can eat or make into wine: a bunch of ...s"},
+{word:"anxious", description: "worried and nervous: My mother always gets a bit ... if we don't arrive when we say we will."},
+{word:"superb", description: "of excellent quality; very great: He is a ... dancer."},
+{word:"resentment", description: "a feeling of anger because you have been forced to accept something that you do not like: This decision has caused ... among some teachers."},
+{word:"layout", description: "the way that something is arranged: I like the ... of the house."},
+{word:"outrage", description: "a feeling of anger and shock: These murders have provoked ... across the country."},
+{word:"mayhem", description: "a situation in which there is little or no order or control: With 20 kids running around and only two adults to supervise, it was complete ... ."},
+{word:"stab", description: "to injure someone with a sharp pointed object such as a knife: She was ...bed several times in the chest."},
+{word:"envelop", description: "to cover or surround something completely: The graveyard looked ghostly, ...ed in mist."},
+{word:"bare", description: "without any clothes or not covered by anything: Don't walk around outside in your ... feet."},
+{word:"coward", description: "a person who is not brave and is too eager to avoid danger, difficulty, or pain: She considered him a ... for failing to join up in the war."},
+{word:"camber", description: "a gradual slope down from the middle of a road to each edge, designed to make water to flow off it"},
+{word:"squash", description: "to crush something into a flat shape: He accidentally sat on her hat and ...ed it."},
+{word:"apply", description: "to request something, usually officially, especially in writing or by sending in a form: By the time I saw the job advertised it was already too late to ... ."},
+{word:"bouncing", description: "(especially of a baby) healthy and energetic: We've got two grandchildren - a three-year-old girl and a ... baby boy."},
+{word:"collision", description: "an accident that happens when two vehicles hit each other with force: The cyclist was in a ... with a bus."},
+{word:"barely", description: "by the smallest amount: She was ... (= only just) 15 when she won her first championship."},
+{word:"arbitrary", description: "based on chance rather than being planned or based on reason: Did you have a reason for choosing your destination or was it ... ?"},
+{word:"primarily", description: "mainly:Baseball is ... a summer game."},
+{word:"dreadful", description: "causing fear, shock, or suffering: The news report was so ... that I just had to switch it off."},
+{word:"spiteful", description: "wanting to annoy, upset, or hurt another person, especially in a small way, because you feel angry towards them: That was a ... thing to say!"},
+{word:"incharge", description: "(a person) having control or being responsible for someone or something: the ... officer"},
+{word:"conform", description: "to behave according to the usual standards of behaviour that are expected by a group or society: At our school, you were required to ..., and there was no place for originality."},
+{word:"omnibus", description: "a book consisting of two or more parts that have already been published separately"},
+{word:"dedicate", description: "to give all of your energy, time, etc.: He has ...ed his life to scientific research."},
+{word:"twitch", description: "(to cause) to make a sudden small movement with a part of the body, usually without intending to: She ...ed her nose like a rabbit."},
+{word:"welfare", description: "help given, especially by the state or an organization, to people who need it, especially because they do not have enough money: Your taxes pay for ... benefits such as unemployment and sickness pay."},
+{word:"undeniable", description: "certainly true: an ... fact"},
+{word:"pollute", description: "to make an area or substance, usually air, water, or soil, dirty or harmful to people, animals, and plants, especially by adding harmful chemicals: The pesticides used on many farms are ...ing the water supply."},
+{word:"encounter", description: "a meeting, especially one that happens by chance: This meeting will be the first ... between the party leaders since the election."},
+{word:"fulfil", description: "to do something that is expected, hoped for, or promised, or to cause it to happen: She doubts whether she'll ever be able to ... her ambition."},
+{word:"submit", description: "to give or offer something for a decision to be made by others: I ...ted a report of the theft to the insurance company."},
+{word:"exaggerate", description: "to make something seem larger, more important, better, or worse than it really is: Don't ... - it wasn't that expensive."},
+{word:"outline", description: "the main shape or edge of something, without any details: She drew the ... of the boat and then coloured it in."},
+{word:"lane", description: "a narrow road in the countryside or in a town: He drives so fast along those narrow country ...s."},
+{word:"appeal", description: "a request to the public for money, information, or help: They're launching (= starting) an ... to raise money for famine victims."},
+{word:"concisely", description: "in a short and clear way that expresses what needs to be said without unnecessary words: The information was presented clearly and ..."},
+{word:"dizzy", description: "feeling as if everything is turning around, and that you are not able to balance and may fall down: Going without sleep for a long time makes me feel ... and light-headed."},
+{word:"roost", description: "a place, such as a branch of a tree, where birds rest or sleep"},
+{word:"pond", description: "an area of water smaller than a lake, often artificially made: a duck ..."},
+{word:"shamble", description: "to walk slowly and awkwardly, without lifting your feet correctly: Sick patients ...ed along the hospital corridors."},
+{word:"remorseless", description: "severe and showing no sadness or guilt: ... cruelty/violence"},
+{word:"puzzle", description: "a situation that is difficult to understand: Scientists have been trying to solve this ... for years."},
+{word:"grit", description: "very small pieces of stone or sand: The road had been covered with ..."},
+{word:"proficient", description: "skilled and experienced: a ... swimmer"},
+{word:"inevitable", description: "certain to happen and unable to be avoided or prevented: The accident was the ... consequence/result/outcome of carelessness."},
+{word:"swallow", description: "to cause food, drink, pills, etc. to move from your mouth into your stomach by using the muscles of your throat: My throat is so sore that it really hurts when I ..."},
+{word:"descent", description: "the state or fact of being related to a particular person or group of people who lived in the past: They trace their line of ... back to a French duke."},
+{word:"precisely", description: "exactly: The fireworks begin at eight o'clock ..."},
+{word:"implement", description: "to start using a plan or system: The changes to the national health system will be ...ed next year."},
+{word:"rogue", description: "behaving in ways that are not expected or not normal, often in a way that causes damage: ... cells"},
+{word:"amusement", description: "the feeling of being entertained or made to laugh: She looked at him with ..."},
+{word:"infernal", description: "very bad or unpleasant: What an ... noise!"},
+{word:"survey", description: "an examination of opinions, behaviour, etc., made by asking people questions: We are conducting a survey to find out what our customers think of their local bus service."},
+{word:"summary", description: "a short, clear description that gives the main facts or ideas about something: At the end of the news, they often give you a summary of the main stories."},
+{word:"solemn", description: "serious and without any humour: a ... face/voice"},
+{word:"anguish", description: "extreme unhappiness caused by physical or mental suffering: In her ... she forgot to leave a message."},
+{word:"apprehensive", description: "feeling worried about something that you are going to do or that is going to happen: I'm very ... about tomorrow's meeting."},
+{word:"distinctive", description: "Something that is ... is easy to recognize because it is different from other things: She's got a very ... voice."},
+{word:"spark", description: "a very small piece of fire that flies out from something that is burning, or one that is made by rubbing two hard things together, or a flash of light made by electricity: You can start a fire by rubbing two dry pieces of wood together until you produce a ..."},
+{word:"militia", description: "a military force whose members are trained soldiers but who often have other jobs: The government called out the ... to help cope with the rioting."},
+{word:"comprehensive", description: "complete and including everything that is necessary: Is this list ... or are there some names missing?"},
+{word:"coherent", description: "If an argument, set of ideas, or a plan is ..., it is clear and carefully considered, and each part of it connects or follows in a natural or reasonable way.When she calmed down, she was more ... (= able to speak clearly and be understood)."},
+{word:"snail", description: "a small creature with a soft, wet body and a round shell, that moves very slowly and often eats garden plants"},
+{word:"dwell", description: "to live in a place or in a particular way: She ... in remote parts of Asia for many years."},
+{word:"omnipresent", description: "present or having an effect everywhere at the same time: The singer became an ... icon of style and beauty."},
+{word:"proceed", description: "to continue as planned: His lawyers have decided not to ... with the case."},
+{word:"perpetuate", description: "to cause something to continue: Increasing the supply of weapons will only ... the violence and anarchy."},
+{word:"perpetrate", description: "to commit a crime or a violent or harmful act: In this country, half of all violent crime is ... by people who have been drinking alcohol."},
+{word:"gargle", description: "to move a liquid around in your throat without swallowing, especially to clean it or stop it feeling painful"},
+{word:"loan", description: "an amount of money that is borrowed, often from a bank, and has to be paid back, usually together with an extra amount of money that you have to pay as a charge for borrowing: She's trying to get a $50,000 ... to start her own business."},
+{word:"serenity", description: "the quality of being peaceful and calm: I admired her ... in the midst of so much chaos."},
+{word:"bleach", description: "a strong chemical used for cleaning things or removing colour from things"},
+{word:"persuasive", description: "making you want to do or believe a particular thing: Your arguments are very ..."},
+{word:"simultaneous", description: "happening or being done at exactly the same time: There were several ... explosions in different cities."},
+{word:"adoration", description: "very strong love or worship for someone: her complete ... of her brother"},
+{word:"upside", description: "the advantage of a situation: It's annoying that we can't travel until Thursday, but the ... is that tickets are cheaper then."},
+{word:"scholarship", description: "serious, detailed study:a work of great ..."},
+{word:"aftermath", description: "the period that follows an unpleasant event or accident, and the effects that it causes: Many more people died in the ... of the explosion."},
+{word:"persist", description: "If an unpleasant feeling or situation ...s, it continues to exist: If the pain ...s, consult a doctor."},
+{ word: "chic", description: "stylish and fashionable: I like your haircut - it's very ... ."},
+{ word: "sewing", description: "a piece of cloth that is being or needs to be ... : She put her ... down."},
+{word:"intimidating", description: "making you feel frightened or nervous: an ... array of weapons"},
+{word:"smug", description: "too pleased or satisfied about something you have achieved or something you know: She deserved her promotion, but I wish she wasn't so ... about it."},
+{word:"dilate", description: "to (cause a part of the body to) become wider or further open: The pupils of the eyes ... as darkness increases."},
+{word:"humbug", description: "dishonest talk, writing, or behaviour that is intended to deceive people: the usual political ..."},
+{word:"inhabit", description: "to live in a place: These remote islands are ...ed only by birds."},
+{word:"distinguish", description: "to notice or understand the difference between two things, or to make one person or thing seem different from another: He's colour-blind and can't ... (the difference) between red and green easily."},
+{word:"crisp", description: "hard enough to be broken easily"},
+{word:"caregiver", description: "someone who takes care of a person who is young, old, or sick"},
+{word:"galvanize", description: "to cause someone to suddenly take action, especially by shocking or exciting them in some way: Western charities were ...ed by TV pictures of starving people."},
+{word:"neglect", description: "to not give enough care or attention to people or things that are your responsibility: to ... your appearance/the house"},
+{word:"frantic", description: "almost out of control because of extreme emotion, such as worry: Where on earth have you been? We've been ... with worry."},
+{word:"stiff", description: "firm or hard: ... cardboard"},
+{word:"ditch", description: "a long, narrow open hole that is dug into the ground, usually at the side of a road or field, used especially for supplying or removing water or for dividing land"}
+]; 
+
+//Define how many words we have in the beginning of game
+const howManyWordsWeHad = wordsWithDescriptions.length.toString();
+
+//create a function for remove guessed element
+function remove (array, randomObject) {
+	const index = array.indexOf(randomObject);
+	array.splice(index,1);
+}
+
+//Create a general loop
+
+var guessedWords = 0
+while (1 > 0) {
+
+
+// Pick a random object
+var randomObject = wordsWithDescriptions[(Math.floor(Math.random()*wordsWithDescriptions.length))];
+
+
+
+
+// Pick a random word and description
+var word = randomObject["word"];
+var description = randomObject["description"]
+
+//Define a final description massage
+var finalDescription = description.replace("...", word.toUpperCase());
+
+
+// Set up the answer array
+var answerArray = [];
+for (var i = 0; i < word.length; i++){
+	answerArray[i] = "_";
+}
+
+var remainingLetters = word.length;
+var score = remainingLetters;
+var attemptsCounter = 0;
+
+
+// The game loop
+
+while (remainingLetters > 0 && score > 0) {
+
+
+	//Show the player their progress
+	alert(answerArray.join(" ")+ "   You have " + score +" attempts."+" Help: "+ description);
+	//Get a guess from the player
+	var guess = prompt("Guess a letter or whole word. Click Cancel to stop playing.").toLowerCase();
+	if (guess === null) {
+		// Exit the game loop
+		break;
+
+
+	} else if (guess === word) {
+		answerArray = [word];
+		remainingLetters = 0;
+
+
+	} else {
+
+		//Update the game state with the guess
+		attemptsCounter=0;
+		for (var j = 0; j < word.length; j++) {
+			if (word[j] === guess && answerArray[j] === "_")  {
+				answerArray[j] = guess;
+				remainingLetters--;
+				} 	
+				else {attemptsCounter++;}
+			}
+		} 
+	///decreasing points if the letter was wrong
+	if (attemptsCounter === word.length) {score--;}
+	}
+
+	/// The end of the game loop
+
+
+// Show the answer and congratulate the player
+
+if (score === 0) {alert(answerArray.join(" "));
+alert("Bad work! The answer was " + word.toUpperCase() + "! - " + finalDescription +" ("+guessedWords+" from "+ howManyWordsWeHad + " had been guessed)");
+}
+else {
+alert(answerArray.join(" "));
+guessedWords++;
+alert("Good job! The answer was " + word.toUpperCase() + "! - " + finalDescription + " ("+guessedWords+" from "+ howManyWordsWeHad + " had been guessed)");
+
+//remove guessed word from the array
+remove (wordsWithDescriptions, randomObject);
+
+}
+
+//Add a little bit of stat to our final page
+document.getElementById("aboutGuessedWords").innerHTML = "Wou! You know " + guessedWords + " from the " + howManyWordsWeHad + " words at least! Very impressive!";
+
+}
+
+
+
+</script>
+</body>
+</html>
