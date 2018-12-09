@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dictionary</title>
+</head>
+<body>
+<h1>Dictionary</h1>
+<p id="aboutGuessedWords"></p>
+<style>
+body {
+	background-color:#87da90cc;
+}
+p {
+	font-size: 20px;
+	font-style: serif;
+}
+</style>
+
+
+<script>
+// Create a list of objects
+//{word:"", description: ""},
+var wordsWithDescriptions = [
+{word:"subdued", description: "If a colour or light is ..., it is not very bright: ... lighting"},
+{word:"envelope", description: "a flat, usually square or rectangular, paper container for a letter: I folded the letter in half and put it in an ... ."},
+{word:"span", description: "the period of time that sometimes exists or happens: an average life ... of 70 years"},
+{word:"reminiscent", description: "making you remember a particular person, event, or thing: That song is so ... of my adolescence."},
+{word:"envelop", description: "to cover or surround something completely: The graveyard looked ghostly, ...ed in mist."},
+{word:"backing", description: "support, especially money, that someone gives to a person or plan: If I go ahead with the plan, can I count on your ... ?"},
+{word:"patronize", description: "to speak to or behave towards someone as if they are stupid or not important: Stop ...ing me - I understand the play as well as you do."},
+{word:"avenge", description: "to do harm to or punish the person responsible for something bad done to you or your family or friends in order to achieve a fair situation: At the end of the film, the murderer is killed by his victim's ...ing girlfriend."},
+{word:"verge", description: "the edge or border of something: They set up camp on the ... of the desert."},
+{word:"solid", description: "hard or firm, keeping a clear shape: ... ground"}
+]; 
+
+//Define how many words we have in the beginning of game
+const howManyWordsWeHad = wordsWithDescriptions.length.toString();
+
+//create a function for remove guessed element
+function remove (array, randomObject) {
+	const index = array.indexOf(randomObject);
+	array.splice(index,1);
+}
+
+//Create a general loop
+
+var guessedWords = 0
+while (1 > 0) {
+
+
+// Pick a random object
+var randomObject = wordsWithDescriptions[(Math.floor(Math.random()*wordsWithDescriptions.length))];
+
+
+
+
+// Pick a random word and description
+var word = randomObject["word"];
+var description = randomObject["description"]
+
+//Define a final description massage
+var finalDescription = description.replace("...", word.toUpperCase());
+
+
+// Set up the answer array
+var answerArray = [];
+for (var i = 0; i < word.length; i++){
+	answerArray[i] = "_";
+}
+
+var remainingLetters = word.length;
+var score = remainingLetters;
+var attemptsCounter = 0;
+
+
+// The game loop
+
+while (remainingLetters > 0 && score > 0) {
+
+
+	//Show the player their progress
+	alert(answerArray.join(" ")+ "   You have " + score +" attempts."+" Help: "+ description);
+	//Get a guess from the player
+	var guess = prompt("Guess a letter or whole word. Click Cancel to stop playing.").toLowerCase();
+	if (guess === null) {
+		// Exit the game loop
+		break;
+
+
+	} else if (guess === word) {
+		answerArray = [word];
+		remainingLetters = 0;
+
+
+	} else {
+
+		//Update the game state with the guess
+		attemptsCounter=0;
+		for (var j = 0; j < word.length; j++) {
+			if (word[j] === guess && answerArray[j] === "_")  {
+				answerArray[j] = guess;
+				remainingLetters--;
+				} 	
+				else {attemptsCounter++;}
+			}
+		} 
+	///decreasing points if the letter was wrong
+	if (attemptsCounter === word.length) {score--;}
+	}
+
+	/// The end of the game loop
+
+
+// Show the answer and congratulate the player
+
+if (score === 0) {alert(answerArray.join(" "));
+alert("Bad work! The answer was " + word.toUpperCase() + "! - " + finalDescription +" ("+guessedWords+" from "+ howManyWordsWeHad + " had been guessed)");
+}
+else {
+alert(answerArray.join(" "));
+guessedWords++;
+alert("Good job! The answer was " + word.toUpperCase() + "! - " + finalDescription + " ("+guessedWords+" from "+ howManyWordsWeHad + " had been guessed)");
+
+//remove guessed word from the array
+remove (wordsWithDescriptions, randomObject);
+
+}
+
+//Add a little bit of stat to our final page
+document.getElementById("aboutGuessedWords").innerHTML = "Wou! You know " + guessedWords + " from " + howManyWordsWeHad + " words at least! Very impressive!";
+
+}
+
+
+
+</script>
+</body>
+</html>

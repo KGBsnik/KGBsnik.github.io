@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dictionary</title>
+</head>
+<body>
+<h1>Dictionary</h1>
+<p id="aboutGuessedWords"></p>
+<style>
+body {
+	background-color:#87da90cc;
+}
+p {
+	font-size: 20px;
+	font-style: serif;
+}
+</style>
+
+
+<script>
+// Create a list of objects
+//{word:"", description: ""},
+var wordsWithDescriptions = [
+{word:"proceed", description: "to continue as planned: His lawyers have decided not to ... with the case."},
+{word:"perpetuate", description: "to cause something to continue: Increasing the supply of weapons will only ... the violence and anarchy."},
+{word:"perpetrate", description: "to commit a crime or a violent or harmful act: In this country, half of all violent crime is ... by people who have been drinking alcohol."},
+{word:"gargle", description: "to move a liquid around in your throat without swallowing, especially to clean it or stop it feeling painful"},
+{word:"loan", description: "an amount of money that is borrowed, often from a bank, and has to be paid back, usually together with an extra amount of money that you have to pay as a charge for borrowing: She's trying to get a $50,000 ... to start her own business."},
+{word:"serenity", description: "the quality of being peaceful and calm: I admired her ... in the midst of so much chaos."},
+{word:"bleach", description: "a strong chemical used for cleaning things or removing colour from things"},
+{word:"persuasive", description: "making you want to do or believe a particular thing: Your arguments are very ..."},
+{word:"simultaneous", description: "happening or being done at exactly the same time: There were several ... explosions in different cities."},
+{word:"adoration", description: "very strong love or worship for someone: her complete ... of her brother"}
+]; 
+
+//Define how many words we have in the beginning of game
+const howManyWordsWeHad = wordsWithDescriptions.length.toString();
+
+//create a function for remove guessed element
+function remove (array, randomObject) {
+	const index = array.indexOf(randomObject);
+	array.splice(index,1);
+}
+
+//Create a general loop
+
+var guessedWords = 0
+while (1 > 0) {
+
+
+// Pick a random object
+var randomObject = wordsWithDescriptions[(Math.floor(Math.random()*wordsWithDescriptions.length))];
+
+
+
+
+// Pick a random word and description
+var word = randomObject["word"];
+var description = randomObject["description"]
+
+//Define a final description massage
+var finalDescription = description.replace("...", word.toUpperCase());
+
+
+// Set up the answer array
+var answerArray = [];
+for (var i = 0; i < word.length; i++){
+	answerArray[i] = "_";
+}
+
+var remainingLetters = word.length;
+var score = remainingLetters;
+var attemptsCounter = 0;
+
+
+// The game loop
+
+while (remainingLetters > 0 && score > 0) {
+
+
+	//Show the player their progress
+	alert(answerArray.join(" ")+ "   You have " + score +" attempts."+" Help: "+ description);
+	//Get a guess from the player
+	var guess = prompt("Guess a letter or whole word. Click Cancel to stop playing.").toLowerCase();
+	if (guess === null) {
+		// Exit the game loop
+		break;
+
+
+	} else if (guess === word) {
+		answerArray = [word];
+		remainingLetters = 0;
+
+
+	} else {
+
+		//Update the game state with the guess
+		attemptsCounter=0;
+		for (var j = 0; j < word.length; j++) {
+			if (word[j] === guess && answerArray[j] === "_")  {
+				answerArray[j] = guess;
+				remainingLetters--;
+				} 	
+				else {attemptsCounter++;}
+			}
+		} 
+	///decreasing points if the letter was wrong
+	if (attemptsCounter === word.length) {score--;}
+	}
+
+	/// The end of the game loop
+
+
+// Show the answer and congratulate the player
+
+if (score === 0) {alert(answerArray.join(" "));
+alert("Bad work! The answer was " + word.toUpperCase() + "! - " + finalDescription +" ("+guessedWords+" from "+ howManyWordsWeHad + " had been guessed)");
+}
+else {
+alert(answerArray.join(" "));
+guessedWords++;
+alert("Good job! The answer was " + word.toUpperCase() + "! - " + finalDescription + " ("+guessedWords+" from "+ howManyWordsWeHad + " had been guessed)");
+
+//remove guessed word from the array
+remove (wordsWithDescriptions, randomObject);
+
+}
+
+//Add a little bit of stat to our final page
+document.getElementById("aboutGuessedWords").innerHTML = "Wou! You know " + guessedWords + " from " + howManyWordsWeHad + " words at least! Very impressive!";
+
+}
+
+
+
+</script>
+</body>
+</html>

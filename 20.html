@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dictionary</title>
+</head>
+<body>
+<h1>Dictionary</h1>
+<p id="aboutGuessedWords"></p>
+<style>
+body {
+	background-color:#87da90cc;
+}
+p {
+	font-size: 20px;
+	font-style: serif;
+}
+</style>
+
+
+<script>
+// Create a list of objects
+//{word:"", description: ""},
+var wordsWithDescriptions = [
+{word:"upside", description: "the advantage of a situation: It's annoying that we can't travel until Thursday, but the ... is that tickets are cheaper then."},
+{word:"scholarship", description: "serious, detailed study:a work of great ..."},
+{word:"aftermath", description: "the period that follows an unpleasant event or accident, and the effects that it causes: Many more people died in the ... of the explosion."},
+{word:"persist", description: "If an unpleasant feeling or situation ...s, it continues to exist: If the pain ...s, consult a doctor."},
+{ word: "chic", description: "stylish and fashionable: I like your haircut - it's very ... ."},
+{ word: "sewing", description: "a piece of cloth that is being or needs to be ... : She put her ... down."},
+{word:"intimidating", description: "making you feel frightened or nervous: an ... array of weapons"},
+{word:"smug", description: "too pleased or satisfied about something you have achieved or something you know: She deserved her promotion, but I wish she wasn't so ... about it."},
+{word:"dilate", description: "to (cause a part of the body to) become wider or further open: The pupils of the eyes ... as darkness increases."},
+{word:"humbug", description: "dishonest talk, writing, or behaviour that is intended to deceive people: the usual political ..."}
+]; 
+
+//Define how many words we have in the beginning of game
+const howManyWordsWeHad = wordsWithDescriptions.length.toString();
+
+//create a function for remove guessed element
+function remove (array, randomObject) {
+	const index = array.indexOf(randomObject);
+	array.splice(index,1);
+}
+
+//Create a general loop
+
+var guessedWords = 0
+while (1 > 0) {
+
+
+// Pick a random object
+var randomObject = wordsWithDescriptions[(Math.floor(Math.random()*wordsWithDescriptions.length))];
+
+
+
+
+// Pick a random word and description
+var word = randomObject["word"];
+var description = randomObject["description"]
+
+//Define a final description massage
+var finalDescription = description.replace("...", word.toUpperCase());
+
+
+// Set up the answer array
+var answerArray = [];
+for (var i = 0; i < word.length; i++){
+	answerArray[i] = "_";
+}
+
+var remainingLetters = word.length;
+var score = remainingLetters;
+var attemptsCounter = 0;
+
+
+// The game loop
+
+while (remainingLetters > 0 && score > 0) {
+
+
+	//Show the player their progress
+	alert(answerArray.join(" ")+ "   You have " + score +" attempts."+" Help: "+ description);
+	//Get a guess from the player
+	var guess = prompt("Guess a letter or whole word. Click Cancel to stop playing.").toLowerCase();
+	if (guess === null) {
+		// Exit the game loop
+		break;
+
+
+	} else if (guess === word) {
+		answerArray = [word];
+		remainingLetters = 0;
+
+
+	} else {
+
+		//Update the game state with the guess
+		attemptsCounter=0;
+		for (var j = 0; j < word.length; j++) {
+			if (word[j] === guess && answerArray[j] === "_")  {
+				answerArray[j] = guess;
+				remainingLetters--;
+				} 	
+				else {attemptsCounter++;}
+			}
+		} 
+	///decreasing points if the letter was wrong
+	if (attemptsCounter === word.length) {score--;}
+	}
+
+	/// The end of the game loop
+
+
+// Show the answer and congratulate the player
+
+if (score === 0) {alert(answerArray.join(" "));
+alert("Bad work! The answer was " + word.toUpperCase() + "! - " + finalDescription +" ("+guessedWords+" from "+ howManyWordsWeHad + " had been guessed)");
+}
+else {
+alert(answerArray.join(" "));
+guessedWords++;
+alert("Good job! The answer was " + word.toUpperCase() + "! - " + finalDescription + " ("+guessedWords+" from "+ howManyWordsWeHad + " had been guessed)");
+
+//remove guessed word from the array
+remove (wordsWithDescriptions, randomObject);
+
+}
+
+//Add a little bit of stat to our final page
+document.getElementById("aboutGuessedWords").innerHTML = "Wou! You know " + guessedWords + " from " + howManyWordsWeHad + " words at least! Very impressive!";
+
+}
+
+
+
+</script>
+</body>
+</html>
